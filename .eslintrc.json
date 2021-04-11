@@ -1,7 +1,8 @@
 {
     "env": {
         "node": true,
-        "es2020": true
+        "es2020": true,
+        "jest": true
     },
     "extends": [
         "airbnb-base",
@@ -27,6 +28,14 @@
         "@typescript-eslint/no-use-before-define": [
 	        "error"
         ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "interface",
+            "prefix": ["I"],
+            "format": ["PascalCase"]
+          }
+        ],
         "import/extensions": [
             "error",
             "ignorePackages",
@@ -36,7 +45,8 @@
         ],
         "semi": "off",
         "prettier/prettier": "error",
-        "camelcase": "off"
+        "camelcase": "off",
+        "no-console": "off"
     },
     "settings": {
         "import/resolver": {
