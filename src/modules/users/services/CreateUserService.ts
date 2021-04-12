@@ -2,8 +2,8 @@ import User from '@modules/users/infra/typeorm/entities/User'
 
 import AppError from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
-import IUsersRepository from '../interfaces/IUsersRepository'
-import IHashProvider from '../providers/HashProvider/models/IHashProvider'
+import IUsersRepository from '@modules/users/interfaces/IUsersRepository'
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider'
 
 interface IRequest {
   name: string
