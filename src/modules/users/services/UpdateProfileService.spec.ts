@@ -109,14 +109,14 @@ describe('UpdateProfile', () => {
       password: '123456',
     })
 
-    const updatedUser = await updateProfileService.execute({
-      user_id: user.id,
-      name: 'Felipe Rocha Oliveira',
-      email: 'feliperocha@gobarber.com',
-      old_password: 'wrong old password',
-      password: '123123',
-    })
-
-    expect(updatedUser.password).toBe('123123')
+    await expect(
+      updateProfileService.execute({
+        user_id: user.id,
+        name: user.name,
+        email: user.email,
+        old_password: 'wrong old password',
+        password: '123123',
+      }),
+    ).rejects.toBeInstanceOf(AppError)
   })
 })
