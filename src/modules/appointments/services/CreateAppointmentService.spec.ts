@@ -3,13 +3,16 @@ import AppError from '@shared/errors/AppError'
 import { uuid } from 'uuidv4'
 import CreateAppointmentService from './CreateAppointmentService'
 
-describe('CreateAppointment', () => {
-  it('should be able to create a new appointment', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository()
-    const createAppointment = new CreateAppointmentService(
-      fakeAppointmentsRepository,
-    )
+let fakeAppointmentsRepository: FakeAppointmentsRepository
+let createAppointment: CreateAppointmentService
 
+describe('CreateAppointment', () => {
+  beforeEach(() => {
+    fakeAppointmentsRepository = new FakeAppointmentsRepository()
+    createAppointment = new CreateAppointmentService(fakeAppointmentsRepository)
+  })
+
+  it('should be able to create a new appointment', async () => {
     const providerId = uuid()
     const appointment = await createAppointment.execute({
       provider_id: providerId,
@@ -21,11 +24,6 @@ describe('CreateAppointment', () => {
   })
 
   it('should not be able to create two appointments on the same time', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository()
-    const createAppointment = new CreateAppointmentService(
-      fakeAppointmentsRepository,
-    )
-
     const providerId = uuid()
     const appointmentDate = new Date(2020, 3, 11, 11)
 
