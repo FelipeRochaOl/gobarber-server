@@ -4,7 +4,7 @@ import ISendMailDTO from '@shared/container/providers/MailProvider/dtos/ISendMai
 import IMailTemplateProvider from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider'
 import { inject, injectable } from 'tsyringe'
 
-injectable()
+@injectable()
 class EtherealMailProvider implements IMailProvider {
   private client: Transporter
 
@@ -14,7 +14,6 @@ class EtherealMailProvider implements IMailProvider {
     @inject('MailTemplateProvider')
     mailTemplateProvider: IMailTemplateProvider,
   ) {
-    this.mailTemplateProvider = mailTemplateProvider
     nodemailer.createTestAccount().then(account => {
       const transporter = nodemailer.createTransport({
         host: account.smtp.host,
@@ -28,6 +27,8 @@ class EtherealMailProvider implements IMailProvider {
 
       this.client = transporter
     })
+
+    this.mailTemplateProvider = mailTemplateProvider
   }
 
   public async sendMail({
