@@ -10,6 +10,7 @@
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "docker": "docker-compose up -d",
     "postgres:start": "brew services start postgresql",
+    "mongo:start": "brew services start mongodb/brew/mongodb-community",
     "test": "jest"
   },
   "dependencies": {
