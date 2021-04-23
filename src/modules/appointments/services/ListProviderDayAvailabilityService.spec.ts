@@ -1,5 +1,6 @@
-import FakeAppointmentsRepository from '@modules/appointments/tests/fakes/FakeAppointmentsRepository'
 import { uuid } from 'uuidv4'
+
+import FakeAppointmentsRepository from '@modules/appointments/tests/fakes/FakeAppointmentsRepository'
 import ListProviderDayAvailabilityService from './ListProviderDayAvailabilityService'
 
 let fakeAppointmentsRepository: FakeAppointmentsRepository

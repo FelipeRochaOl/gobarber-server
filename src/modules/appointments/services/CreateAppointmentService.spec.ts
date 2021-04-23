@@ -1,20 +1,27 @@
+import { uuid } from 'uuidv4'
+import AppError from '@shared/errors/AppError'
+
 import FakeAppointmentsRepository from '@modules/appointments/tests/fakes/FakeAppointmentsRepository'
 import FakeNotificationRepository from '@modules/notifications/interfaces/fakes/FakeNotificationRepository'
-import AppError from '@shared/errors/AppError'
-import { uuid } from 'uuidv4'
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider'
+
 import CreateAppointmentService from './CreateAppointmentService'
 
 let fakeAppointmentsRepository: FakeAppointmentsRepository
 let fakeNotificationRepository: FakeNotificationRepository
+let fakeCacheProvider: FakeCacheProvider
 let createAppointment: CreateAppointmentService
 
 describe('CreateAppointment', () => {
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository()
     fakeNotificationRepository = new FakeNotificationRepository()
+    fakeCacheProvider = new FakeCacheProvider()
+
     createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
       fakeNotificationRepository,
+      fakeCacheProvider,
     )
   })
 
