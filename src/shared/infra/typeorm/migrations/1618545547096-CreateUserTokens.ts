@@ -50,7 +50,7 @@ export default class CreateUserTokens1618545547096
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('appointments', 'AppointmentProvider')
+    await queryRunner.dropForeignKey('user_tokens', 'TokenUser')
     await queryRunner.dropTable('user_tokens')
   }
 }
