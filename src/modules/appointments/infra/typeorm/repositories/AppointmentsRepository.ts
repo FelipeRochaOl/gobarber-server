@@ -4,6 +4,7 @@ import IAppointmentsRepository from '@modules/appointments/interfaces/IAppointme
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO'
 import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO'
 import IFindAllInDayFromProviderDTO from '@modules/appointments/dtos/IFindAllInDayFromProviderDTO'
+import { String } from 'aws-sdk/clients/apigateway'
 
 class AppointmentsRepository implements IAppointmentsRepository {
   private ormRepository: Repository<Appointment>
@@ -27,9 +28,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointment
   }
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(
+    date: Date,
+    provider_id: string,
+  ): Promise<Appointment | undefined> {
     const findAppointment = await this.ormRepository.findOne({
-      where: { date },
+      where: { date, provider_id },
     })
     return findAppointment || undefined
   }
