@@ -16,11 +16,11 @@ import '@shared/container'
 
 const app = express()
 
-app.use(rateLimiter)
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/files', express.static(uploadConfig.uploadsFolder))
+app.use(rateLimiter)
 app.use(routes)
 
 app.use(errors())
@@ -33,6 +33,8 @@ app.use(
         message: error.message,
       })
     }
+
+    console.error(error.message)
 
     return response.status(500).json({
       status: error,
