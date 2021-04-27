@@ -34,7 +34,7 @@ app.use(
       })
     }
 
-    console.error(error.message)
+    console.error(error)
 
     return response.status(500).json({
       status: error,
