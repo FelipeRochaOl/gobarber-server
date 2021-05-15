@@ -46,11 +46,40 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: ".,!node_modules"
+          source: ".,!node_modules,!docker-compose.yml"
           target: "~/app/gobarber"
 
-      # To replace code in dir dist with new code
       # Execute yarn in Digital Ocean
+      - name: Install dependences on Digital Ocean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/gobarber
+            yarn
+      
       # Execute migrations with TypeORM
+      - name: Install migrations on Digital Ocean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/gobarber
+            yarn typeorm migration:run
+
       # Restart server node
+      - name: Restart PM2 on Digital Ocean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: pm2 restart gobarber-api
     
