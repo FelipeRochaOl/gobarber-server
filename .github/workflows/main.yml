@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Install Node
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 12.x
+
+      # Cache Yarn
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      # Install dependences NPM/Yarn
+      - name: Install dependences
+        run: yarn
+
+      # Execute build
+      - name: Run build
+        run: yarn build
+
+      # Copy dir app with project files to Digital Ocean
+      - name: Copy dir app with project files to Digital Ocean
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          source: ".,!node_modules,!docker-compose.yml"
+          target: "~/app/gobarber"
+
+      # Execute yarn in Digital Ocean
+      - name: Install dependences on Digital Ocean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/gobarber
+            yarn
+      
+      # Execute migrations with TypeORM
+      - name: Install migrations on Digital Ocean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/gobarber
+            yarn typeorm migration:run
+
+      # Restart server node
+      - name: Restart PM2 on Digital Ocean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: pm2 restart gobarber-api
+    
