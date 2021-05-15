@@ -55,7 +55,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.PORT }}
+          port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/app/gobarber
@@ -67,7 +67,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.PORT }}
+          port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/app/gobarber
@@ -79,7 +79,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.PORT }}
+          port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: pm2 restart gobarber-api
     
