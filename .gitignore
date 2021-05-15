@@ -7,3 +7,4 @@ coverage/*
 dist/*
 .vscode
 ormconfig.json
+docker-compose-live.yml
