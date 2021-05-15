@@ -71,7 +71,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/app/gobarber
-            ./node_modules/.bin/ypeorm migration:run
+            ./node_modules/.bin/typeorm migration:run
 
       # Restart server node
       - name: Restart PM2 on Digital Ocean
