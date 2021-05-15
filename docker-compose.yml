@@ -2,42 +2,34 @@ version: '3.1'
 
 services:
   postgres:
-    build:
-      context: .
-      dockerfile: ./docker/postgresql/Dockerfile
+    image: 'bitnami/postgresql:latest'
     restart: always
     container_name: postgres
     ports:
       - 5432:5432
     environment:
-      - DEBUG=true
-      - PG_TRUST_LOCALNET=true
-      - DB_EXTENSION=uuid-ossp
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_USER=postgres
-      - POSTGRES_MULTIPLE_DATABASES=gostack_gobarber
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_DATABASE=gostack_gobarber
     volumes:
-      - /Users/feliperochaoliveira/Documents/projects/gobarber-server/src/database:/var/lib/postgresql
+      - ~/app/gobarber/src/database:/bitnami/postgresql
 
   # Use root/example as user/password credentials
-  mongo:
+  mongodb:
     image: bitnami/mongodb:latest
     restart: always
+    container_name: mongo
+    ports:
+      - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo
-      MONGO_INITDB_ROOT_PASSWORD: docker
-      MONGO_INITDB_DATABASE: gostack_gobarber
+      - MONGODB_USERNAME=mongo
+      - MONGODB_PASSWORD=docker
+      - MONGODB_DATABASE=gostack_gobarber
 
   redis:
     image: bitnami/redis:latest
-    container_name: cache
-    expose:
-      - 6379
-
-  app:
-    # some definitions
-    links:
-      - redis
+    container_name: redis
+    ports:
+      - 6379:6379
     environment:
-      - REDIS_URL=redis://cache
-      # rest of the environment definitions
+      - REDIS_PASSWORD=docker

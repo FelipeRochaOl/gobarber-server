@@ -13,7 +13,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/files', express.static(uploadConfig.directory))
+app.use('/files', express.static(uploadConfig.uploadsFolder))
 app.use(routes)
 
 app.use(
@@ -25,7 +25,7 @@ app.use(
       })
     }
 
-    console.error(response.message)
+    console.error(error.message)
 
     return response.status(500).json({
       status: error,
