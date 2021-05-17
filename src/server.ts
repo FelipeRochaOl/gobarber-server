@@ -4,13 +4,14 @@ import 'express-async-errors'
 import cors from 'cors'
 import routes from './routes'
 import uploadConfig from './config/upload'
+import corsConfig from './config/cors'
 
 import './database'
 import AppError from './errors/AppError'
 
 const app = express()
 
-app.use(cors())
+app.use(cors(corsConfig))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/files', express.static(uploadConfig.uploadsFolder))
