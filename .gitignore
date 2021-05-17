@@ -1,7 +1,7 @@
 node_modules
-tmp/*
 !tmp/.gitkeep
 !tmp/uploads/dog-avatar.png
+tmp/*
 .env
 coverage/*
 dist/*
