@@ -8,14 +8,14 @@
     "password": "",
     "database": "gostack_gobarber",
     "entities": [
-      "./src/modules/**/infra/typeorm/entities/*{.ts,.js}"
+      "./dist/modules/**/infra/typeorm/entities/*.js"
     ],
     "migrations": [
-        "./src/shared/infra/typeorm/migrations/*{.ts,.js}"
+        "./dist/shared/infra/typeorm/migrations/*.js"
     ],
     "cli": {
-        "entitiesDir": "./src/modules/**/infra/typeorm/entities/",
-        "migrationsDir": "./src/shared/infra/typeorm/migrations/"
+        "entitiesDir": "./dist/modules/**/infra/typeorm/entities/",
+        "migrationsDir": "./dist/shared/infra/typeorm/migrations/"
     }
   },
   {
@@ -26,7 +26,7 @@
     "database": "gostack_gobarber",
     "useUnifiedTopology": true,
     "entities": [
-        "./src/modules/**/infra/typeorm/schemas/*{.ts,.js}"
+        "./dist/modules/**/infra/typeorm/schemas/*.js"
     ]
   }
 ]
