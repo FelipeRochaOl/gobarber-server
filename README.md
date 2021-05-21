@@ -1,3 +1,28 @@
+# Aplicação
+[![Watch the video](https://cdn.loom.com/sessions/thumbnails/7a2aaea5bd5746ff9ca4f5f277dbd84a-with-play.gif)](https://www.loom.com/share/7a2aaea5bd5746ff9ca4f5f277dbd84a)
+
+# Instalação
+  Antes de efetuar a instalação do projeto, remover isso, do arquivo docker-compose.yml:
+
+  ```
+  volumes:
+      - ~/app/gobarber/src/database:/bitnami/postgresql
+  ```
+
+  Execute:
+
+  ```
+    docker-compose up -d
+  ```  
+
+  Após subir os containers do Redis, Mongo e Postgres, crie no seu postgres um banco de dados com o nome `gostack_gobarber`, executar no terminal o typeORM para instalação das migrations:
+
+  ```
+    yarn typeorm migration:run
+  ```
+
+  Depois disso apenas iniciar seu projedo com o comando `yarn dev:server`
+
 # Recuperação de senha
 
 **Requisitos Funcionais**
