@@ -6,7 +6,8 @@ import {
 } from 'typeorm'
 
 export default class CreateAppointments1615749803455
-  implements MigrationInterface {
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({

@@ -47,7 +47,12 @@ describe('CreateAppointment', () => {
     const provider_id = uuid()
     const user_id = uuid()
 
-    const appointmentDate = new Date(2021, 4, 10, 12)
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    tomorrow.setHours(8, 0, 0, 0)
+
+    const appointmentDate = new Date(tomorrow)
 
     await createAppointment.execute({
       provider_id,
