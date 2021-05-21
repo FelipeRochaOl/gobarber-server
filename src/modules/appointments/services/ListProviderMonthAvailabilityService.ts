@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import IAppointmentsRepository from '@modules/appointments/interfaces/IAppointmentsRepository'
-import { getDate, getDaysInMonth, isAfter } from 'date-fns'
+import { getDate, getDaysInMonth, isAfter, isWeekend } from 'date-fns'
 
 interface IRequest {
   provider_id: string
@@ -53,7 +53,9 @@ class ListProviderMonthAvailabilityService {
       return {
         day,
         available:
-          isAfter(compareDate, new Date()) && appointmentsInDay.length < 10,
+          isAfter(compareDate, new Date()) &&
+          appointmentsInDay.length < 10 &&
+          !isWeekend(new Date(year, month - 1, day)),
       }
     })
 
